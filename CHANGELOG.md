@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `@ipgeolocation/vercel-middleware` will be documented here.
+All notable changes to `ipgeolocation-vercel-middleware` will be documented here.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 

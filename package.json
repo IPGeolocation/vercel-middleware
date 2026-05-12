@@ -1,5 +1,5 @@
 {
-  "name": "@ipgeolocation/vercel-middleware",
+  "name": "ipgeolocation-vercel-middleware",
   "version": "1.0.0",
   "description": "Official IPGeolocation.io middleware for Next.js — geo-blocking, country redirects, VPN/proxy/bot detection at the edge.",
   "keywords": [

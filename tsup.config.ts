@@ -15,6 +15,6 @@ export default defineConfig({
   platform: 'browser',
   target: 'es2020',
   banner: {
-    js: '/* @ipgeolocation/vercel-middleware — https://ipgeolocation.io */'
+    js: '/* ipgeolocation-vercel-middleware — https://ipgeolocation.io */'
   }
 });

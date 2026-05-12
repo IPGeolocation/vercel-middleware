@@ -5,7 +5,7 @@
 //   Copy this file to `middleware.ts` at your project root, or import the
 //   middleware function and call it from your own middleware.ts:
 //
-//   import { middleware, config } from '@ipgeolocation/vercel-middleware/middleware';
+//   import { middleware, config } from 'ipgeolocation-vercel-middleware/middleware';
 //   export { middleware, config };
 //
 // ─────────────────────────────────────────────────────────────────────────────

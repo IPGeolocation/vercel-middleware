@@ -1,9 +1,9 @@
-# @ipgeolocation/vercel-middleware
+# ipgeolocation-vercel-middleware
 
 **Official [IPGeolocation.io](https://ipgeolocation.io) middleware for Next.js.**  
 Block bots, VPNs, proxies, and bad actors at the Vercel edge — before your app sees a single request.
 
-[![npm version](https://img.shields.io/npm/v/@ipgeolocation/vercel-middleware)](https://www.npmjs.com/package/@ipgeolocation/vercel-middleware)
+[![npm version](https://img.shields.io/npm/v/ipgeolocation-vercel-middleware)](https://www.npmjs.com/package/ipgeolocation-vercel-middleware)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-%E2%89%A513.0-black)](https://nextjs.org)
 
@@ -62,11 +62,11 @@ Zero latency added for repeat visitors (cached). No changes required to your app
 ## Installation
 
 ```bash
-npm install @ipgeolocation/vercel-middleware
+npm install ipgeolocation-vercel-middleware
 # or
-yarn add @ipgeolocation/vercel-middleware
+yarn add ipgeolocation-vercel-middleware
 # or
-pnpm add @ipgeolocation/vercel-middleware
+pnpm add ipgeolocation-vercel-middleware
 ```
 
 ---
@@ -78,7 +78,7 @@ pnpm add @ipgeolocation/vercel-middleware
 Create `middleware.ts` at your project root:
 
 ```typescript
-export { middleware, config } from '@ipgeolocation/vercel-middleware/middleware';
+export { middleware, config } from 'ipgeolocation-vercel-middleware/middleware';
 ```
 
 Then add your API key to `.env.local`:
@@ -96,7 +96,7 @@ Done.
 ```typescript
 // middleware.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { middleware as ipGeoMiddleware } from '@ipgeolocation/vercel-middleware/middleware';
+import { middleware as ipGeoMiddleware } from 'ipgeolocation-vercel-middleware/middleware';
 
 export async function middleware(request: NextRequest) {
   // Run IPGeolocation checks first
@@ -109,7 +109,7 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-export { config } from '@ipgeolocation/vercel-middleware/middleware';
+export { config } from 'ipgeolocation-vercel-middleware/middleware';
 ```
 
 ---
@@ -121,7 +121,7 @@ import {
   lookupIpGeolocation,
   getClientIp,
   shouldBlockBySecurity
-} from '@ipgeolocation/vercel-middleware';
+} from 'ipgeolocation-vercel-middleware';
 ```
 
 ---
