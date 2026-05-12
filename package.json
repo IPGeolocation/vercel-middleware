@@ -1,0 +1,76 @@
+{
+  "name": "@ipgeolocation/vercel-middleware",
+  "version": "1.0.0",
+  "description": "Official IPGeolocation.io middleware for Next.js — geo-blocking, country redirects, VPN/proxy/bot detection at the edge.",
+  "keywords": [
+    "ipgeolocation",
+    "vercel",
+    "nextjs",
+    "middleware",
+    "edge",
+    "geolocation",
+    "geo-blocking",
+    "vpn-detection",
+    "bot-detection",
+    "security",
+    "edge-runtime"
+  ],
+  "homepage": "https://github.com/ipgeolocation/vercel-middleware#readme",
+  "bugs": {
+    "url": "https://github.com/ipgeolocation/vercel-middleware/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ipgeolocation/vercel-middleware.git"
+  },
+  "license": "MIT",
+  "author": "IPGeolocation.io <support@ipgeolocation.io> (https://ipgeolocation.io)",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./middleware": {
+      "types": "./dist/middleware.d.ts",
+      "import": "./dist/middleware.js",
+      "require": "./dist/middleware.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run typecheck && npm run test && npm run build"
+  },
+  "peerDependencies": {
+    "next": ">=13.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@vitest/coverage-v8": "^1.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
