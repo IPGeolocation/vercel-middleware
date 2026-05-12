@@ -35,20 +35,20 @@ Zero latency added for repeat visitors (cached). No changes required to your app
 
 | Feature | Description |
 |---|---|
-| 🌍 Country allow-list | Only permit traffic from specific countries |
-| 🚫 Country block-list | Block specific countries |
-| 🔀 Country redirects | Send users to locale-specific paths (`/us`, `/uk`) |
-| 🕵️ VPN detection | Block VPN connections |
-| 🔒 Proxy detection | Block datacenter / anonymous proxies |
-| 🧅 Tor detection | Block Tor exit nodes |
-| 🤖 Bot detection | Block known bots and scrapers |
-| 📧 Spam detection | Block IPs flagged as spam sources |
-| ⚔️ Attacker detection | Block IPs with a known attack history |
-| ☁️ Cloud provider detection | Block cloud / datacenter IP ranges |
-| 📊 Threat score | Block IPs above a configurable threat score (0–100) |
-| 📨 Geo headers | Forward rich geo data to your app as `x-ipgeo-*` headers |
-| ⚡ Edge caching | In-memory TTL cache — one API call per IP per minute |
-| 🔐 Fail-closed mode | Block traffic when the API is unavailable |
+| Country allow-list | Only permit traffic from specific countries |
+| Country block-list | Block specific countries |
+| Country redirects | Send users to locale-specific paths (`/us`, `/uk`) |
+| VPN detection | Block VPN connections |
+| Proxy detection | Block datacenter / anonymous proxies |
+| Tor detection | Block Tor exit nodes |
+| Bot detection | Block known bots and scrapers |
+| Spam detection | Block IPs flagged as spam sources |
+| Attacker detection | Block IPs with a known attack history |
+| Cloud provider detection | Block cloud / datacenter IP ranges |
+| Threat score | Block IPs above a configurable threat score (0–100) |
+| Geo headers | Forward rich geo data to your app as `x-ipgeo-*` headers |
+| Edge caching | In-memory TTL cache — one API call per IP per minute |
+| Fail-closed mode | Block traffic when the API is unavailable |
 
 ---
 
@@ -87,7 +87,7 @@ Then add your API key to `.env.local`:
 IPGEOLOCATION_API_KEY=your_api_key_here
 ```
 
-Done. 🎉
+Done.
 
 ---
 
