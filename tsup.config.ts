@@ -11,10 +11,11 @@ export default defineConfig({
   clean: true,
   splitting: false,
   treeshake: true,
-  // Edge Runtime does not support Node.js built-ins — keep the bundle clean
+  // The Edge Runtime has no Node.js built-ins, so keep the bundle free of them.
   platform: 'browser',
   target: 'es2020',
+  external: ['next', 'next/server'],
   banner: {
-    js: '/* ipgeolocation-vercel-middleware — https://ipgeolocation.io */'
+    js: '/* ipgeolocation-vercel-middleware | https://ipgeolocation.io */'
   }
 });

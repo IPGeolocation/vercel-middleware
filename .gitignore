@@ -1,7 +1,10 @@
 node_modules/
 dist/
 coverage/
+.env
+.env.local
 *.env
 *.env.local
 .DS_Store
 .npmrc
+.vscode
