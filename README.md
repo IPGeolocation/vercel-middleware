@@ -5,7 +5,7 @@
 Official Next.js middleware from [IPGeolocation.io](https://ipgeolocation.io). It resolves the visitor's IP address at the Vercel edge, applies your country and security rules before the request reaches your application, and passes the geolocation data on as request headers.
 
 [![npm version](https://img.shields.io/npm/v/ipgeolocation-vercel-middleware)](https://www.npmjs.com/package/ipgeolocation-vercel-middleware)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ipgeolocation/vercel-middleware/blob/main/LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-13%20to%2016-black)](https://nextjs.org)
 
 Next.js middleware runs on the Vercel edge network before a request is routed to a page, a Route Handler or an API route. That is the right place to decide whether a visitor should be served at all, and the right place to work out where they are so the rest of your application does not have to.
@@ -298,7 +298,7 @@ Headers that use the prefix are removed from the inbound request on every path, 
 
 ## Configuration
 
-Every setting is an environment variable, so you can change behaviour per environment in Vercel without a code change. A complete annotated file is in [`.env.example`](.env.example).
+Every setting is an environment variable, so you can change behaviour per environment in Vercel without a code change. A complete annotated file is in [`.env.example`](https://github.com/vercel/ipgeolocation-vercel-middleware/blob/main/.env.example).
 
 ### Required
 
@@ -571,7 +571,7 @@ export async function POST(request: Request) {
 
 ## Upgrading from 1.x
 
-Version 2.0.0 fixes behaviour that was wrong rather than merely different, so a few defaults changed. The full list is in [CHANGELOG.md](CHANGELOG.md). The points most likely to affect you:
+Version 2.0.0 fixes behaviour that was wrong rather than merely different, so a few defaults changed. The full list is in [CHANGELOG.md](https://github.com/ipgeolocation-vercel-middleware/ipgeolocation-vercel-middleware/blob/main/CHANGELOG.md). The points most likely to affect you:
 
 - The security module is requested only when a security rule is on. If you relied on `x-ipgeo-is-vpn` being present while every rule was off, switch on the rule you care about or pass `include: ['security']` when calling the library directly.
 - `lookupIpGeolocation` no longer sets `includeSecurity: true` by default.
