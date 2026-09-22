@@ -76,8 +76,6 @@ yarn add ipgeolocation-vercel-middleware
 pnpm add ipgeolocation-vercel-middleware
 ```
 
-The package ships ESM and CommonJS builds with TypeScript declarations, has no runtime dependencies, and adds about 34 KB to the edge bundle, roughly 9 KB compressed.
-
 ## Quick Start
 
 ### Step 1. Add your API key
@@ -279,7 +277,7 @@ A header is set only when the API returned a value for it, so a missing header m
 | `x-ipgeo-currency` | `SEK` | No |
 | `x-ipgeo-asn` | `AS1257` | No |
 | `x-ipgeo-asn-organization` | `Tele2 Sverige AB` | No |
-| `x-ipgeo-company` | `Tele2 Sverige AB` | Paid plan field |
+| `x-ipgeo-company` | `Tele2 Sverige AB` | No |
 | `x-ipgeo-threat-score` | `80` | Yes |
 | `x-ipgeo-is-vpn` | `true` | Yes |
 | `x-ipgeo-is-proxy` | `false` | Yes |
