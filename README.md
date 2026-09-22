@@ -150,7 +150,7 @@ export default async function BlockedPage({
 }
 ```
 
-On Next.js 13 and 14, `searchParams` is a plain object rather than a promise, so drop the `await` and the `Promise` type. A fuller example with a message for every reason is in [`examples/app/blocked/page.tsx`](https://github.com/ipgeolocation/ipgeolocation-vercel-middleware/blob/main/examples/app/blocked/page.tsx).
+On Next.js 13 and 14, `searchParams` is a plain object rather than a promise, so drop the `await` and the `Promise` type. A fuller example with a message for every reason is in [`examples/app/blocked/page.tsx`](https://github.com/ipgeolocation/vercel-middleware/blob/main/examples/app/blocked/page.tsx).
 
 If you would rather not create a page at all, set `IPGEO_BLOCK_MODE=deny` and the middleware answers with a plain HTTP 403.
 
@@ -298,7 +298,7 @@ Headers that use the prefix are removed from the inbound request on every path, 
 
 ## Configuration
 
-Every setting is an environment variable, so you can change behaviour per environment in Vercel without a code change. A complete annotated file is in [`.env.example`](https://github.com/vercel/ipgeolocation-vercel-middleware/blob/main/.env.example).
+Every setting is an environment variable, so you can change behaviour per environment in Vercel without a code change. A complete annotated file is in [`.env.example`](https://github.com/IPGeolocation/vercel-middleware/blob/main/.env.example).
 
 ### Required
 
@@ -571,7 +571,7 @@ export async function POST(request: Request) {
 
 ## Upgrading from 1.x
 
-Version 2.0.0 fixes behaviour that was wrong rather than merely different, so a few defaults changed. The full list is in [CHANGELOG.md](https://github.com/ipgeolocation-vercel-middleware/ipgeolocation-vercel-middleware/blob/main/CHANGELOG.md). The points most likely to affect you:
+Version 2.0.0 fixes behaviour that was wrong rather than merely different, so a few defaults changed. The full list is in [CHANGELOG.md](https://github.com/ipgeolocation/vercel-middleware/blob/main/CHANGELOG.md). The points most likely to affect you:
 
 - The security module is requested only when a security rule is on. If you relied on `x-ipgeo-is-vpn` being present while every rule was off, switch on the rule you care about or pass `include: ['security']` when calling the library directly.
 - `lookupIpGeolocation` no longer sets `includeSecurity: true` by default.
