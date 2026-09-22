@@ -1,12 +1,12 @@
 # IPGeolocation.io Next.js Middleware for Vercel
 
+## Overview
+
 Official Next.js middleware from [IPGeolocation.io](https://ipgeolocation.io). It resolves the visitor's IP address at the Vercel edge, applies your country and security rules before the request reaches your application, and passes the geolocation data on as request headers.
 
 [![npm version](https://img.shields.io/npm/v/ipgeolocation-vercel-middleware)](https://www.npmjs.com/package/ipgeolocation-vercel-middleware)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-13%20to%2016-black)](https://nextjs.org)
-
-## Overview
 
 Next.js middleware runs on the Vercel edge network before a request is routed to a page, a Route Handler or an API route. That is the right place to decide whether a visitor should be served at all, and the right place to work out where they are so the rest of your application does not have to.
 
