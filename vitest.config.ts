@@ -7,8 +7,8 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov'],
-      include: ['src/**/*.ts'],
-      exclude: ['src/**/*.test.ts']
+      include: ['index.ts', 'middleware.ts', 'ipgeolocation-edge.ts'],
+      exclude: ['**/*.test.ts']
     }
   }
 });
