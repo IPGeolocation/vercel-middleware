@@ -37,9 +37,9 @@ This package handles both jobs. Set an API key, and every request that matches y
 1. A request reaches the Vercel edge network and matches the middleware matcher.
 2. Inbound headers that use your geo prefix are removed, so a visitor cannot forge them.
 3. The client IP is read from `x-forwarded-for` or another platform header, then validated.
-4. The IP is looked up through the IPGeolocation.io v3 API, or read from the in memory cache.
+4. The IP is looked up through the IPGeolocation.io v3 API, or read from the in-memory cache.
 5. Country rules run, then security rules, then country redirects.
-6. If nothing matched, the request continues with the `x-ipgeo-*` headers attached.
+6. If nothing matches, the request continues with the `x-ipgeo-*` headers attached.
 
 Repeat visitors within the cache window add no network latency and cost no credits.
 
@@ -49,7 +49,7 @@ Repeat visitors within the cache window add no network latency and cost no credi
 - Node.js 18 or later for local development
 - An [IPGeolocation.io API key](https://app.ipgeolocation.io/signup)
 
-### Which plan you need
+### Which plan do you need
 
 The base lookup, which returns country, region, city, coordinates, time zone, currency and ASN, works on the free plan. The free plan includes 1,000 requests per day.
 
@@ -202,7 +202,7 @@ On Next.js 13 and 14, `headers()` is synchronous, so drop the `await`.
 
 ### Step 6. Check that it works
 
-Run `next dev` and open the site. Locally there is no edge network in front of you, so the request arrives from `127.0.0.1`, which the API cannot resolve. The middleware recognises a private address and passes the request through without spending a credit, which means no headers are set. To see real data locally, send a public address yourself:
+Run `next dev` and open the site. Locally, there is no edge network in front of you, so the request arrives from `127.0.0.1`, which the API cannot resolve. The middleware recognises a private address and passes the request through without spending a credit, which means no headers are set. To see real data locally, send a public address yourself:
 
 ```bash
 curl -H 'x-forwarded-for: 91.128.103.196' http://localhost:3000/
@@ -498,7 +498,7 @@ export const middleware = createIpGeoMiddleware({
 
 The middleware reads the first of these headers that carries a usable address: `x-vercel-forwarded-for`, `x-forwarded-for`, `x-real-ip`, `cf-connecting-ip`, `true-client-ip`. Values are validated before use, and ports, bracketed IPv6, IPv4 mapped IPv6 such as `::ffff:203.0.113.10` and zone indexes are all normalised.
 
-Private, loopback, link local, carrier grade NAT and documentation ranges are rejected, because the API answers HTTP 423 for them. Rejecting them locally saves a round trip and a log line.
+Private, loopback, link-local, carrier-grade NAT and documentation ranges are rejected, because the API answers HTTP 423 for them. Rejecting them locally saves a round trip and a log line.
 
 On Vercel, the platform sets `x-forwarded-for` from the real connection and does not forward an externally supplied value, which is why the default of reading the rightmost entry is safe there. Vercel's own [request headers documentation](https://vercel.com/docs/headers/request-headers) states that the header is overwritten to prevent spoofing, and that forwarding a custom value requires an Enterprise trusted proxy.
 
@@ -510,7 +510,7 @@ If you run your own reverse proxy in front of the application, set `IPGEO_TRUSTE
 
 **Coalescing.** Concurrent lookups for the same address share a single request, so a burst of traffic from one IP does not turn into a burst of API calls.
 
-**Cache size.** The cache is bounded by `IPGEO_CACHE_MAX_ENTRIES`. Expired entries are dropped first, then the coldest keys, so a long lived isolate cannot grow without limit.
+**Cache size.** The cache is bounded by `IPGEO_CACHE_MAX_ENTRIES`. Expired entries are dropped first, then the coldest keys, so a long-lived isolate cannot grow without limit.
 
 **Retries.** A timeout, a network error or a 5xx response is retried once by default with a short delay. Client errors such as 401, 403, 423 and 429 are never retried, because retrying them cannot help.
 
@@ -564,7 +564,7 @@ export async function POST(request: Request) {
 | `buildGeoHeaders(geo, ip, prefix?)` | Builds the `x-ipgeo-*` map |
 | `stripSpoofedGeoHeaders(headers, prefix?)` | Removes inbound headers using the prefix |
 | `parseCsvEnv`, `parseList`, `parseRedirectMap`, `normalizeInternalPath`, `envFlag`, `envNumber` | Configuration parsing helpers |
-| `getIpGeoRuntimeState()` | Cache size, in flight count, failure count and breaker state |
+| `getIpGeoRuntimeState()` | Cache size, in-flight count, failure count and breaker state |
 | `resetIpGeoRuntimeState()` | Clears cache and breaker state, useful in tests |
 
 `lookupIpGeolocationResult` accepts `apiKey`, `ip`, `include`, `includeSecurity`, `fields`, `excludes`, `timeoutMs`, `retries`, `cacheTtlMs`, `allowPrivateIp` and `baseUrl`.
@@ -596,7 +596,7 @@ Version 2.0.0 fixes behaviour that was wrong rather than merely different, so a 
 4. Set `IPGEO_LOG_LEVEL=debug` and look at the runtime logs for the lookup line.
 5. If you wrote your own middleware around this one, make sure you return `NextResponse.next({ request: { headers: geo.requestHeaders } })`. A bare `NextResponse.next()` discards them.
 
-### Build fails with `It mustn't be reexported`
+### Build fails with `It mustn't be reexported.`
 
 **Cause:** `config` was re-exported from the package, as in `export { middleware, config } from 'ipgeolocation-vercel-middleware/middleware'`. Next.js reads the matcher statically at build time and cannot resolve a value that lives in a dependency.
 
@@ -709,17 +709,17 @@ No. Geolocation headers, country allow and block lists, and country redirects al
 
 <details>
 <summary><strong>How many credits does each request cost?</strong></summary>
-An uncached lookup costs 1 credit with no security rules active, and 3 credits with any of them active, because the security module adds 2 credits to the base lookup. A cached lookup costs nothing. With the default 60 second cache, a visitor who loads ten pages in a minute costs one lookup on that edge isolate. The exact charge for a request is returned in the `X-Credits-Charged` header, which the middleware reports at debug log level.
+An uncached lookup costs 1 credit with no security rules active, and 3 credits with any of them active, because the security module adds 2 credits to the base lookup. A cached lookup costs nothing. With the default 60-second cache, a visitor who loads ten pages in a minute costs one lookup on that edge isolate. The exact charge for a request is returned in the `X-Credits-Charged` header, which the middleware reports at debug log level.
 </details>
 
 <details>
 <summary><strong>How much latency does this add?</strong></summary>
-A cached lookup adds no network call. An uncached lookup adds one API round trip from the edge region, bounded by `IPGEO_TIMEOUT_MS`, which defaults to 3 seconds. During an API incident the circuit breaker stops the middleware from spending that timeout on every request.
+A cached lookup adds no network call. An uncached lookup adds one API round trip from the edge region, bounded by `IPGEO_TIMEOUT_MS`, which defaults to 3 seconds. During an API incident, the circuit breaker stops the middleware from spending that timeout on every request.
 </details>
 
 <details>
 <summary><strong>Does it work outside Vercel?</strong></summary>
-Yes. The middleware uses standard Next.js APIs and the Web Fetch API, so it runs anywhere Next.js middleware runs, including self hosted Node.js. The only platform specific part is client IP resolution. Outside Vercel, check which header your proxy sets and configure `IPGEO_TRUSTED_PROXY_COUNT` or `IPGEO_TRUST_FIRST_XFF` accordingly.
+Yes. The middleware uses standard Next.js APIs and the Web Fetch API, so it runs anywhere Next.js middleware runs, including self-hosted Node.js. The only platform-specific part is client IP resolution. Outside Vercel, check which header your proxy sets and configure `IPGEO_TRUSTED_PROXY_COUNT` or `IPGEO_TRUST_FIRST_XFF` accordingly.
 </details>
 
 <details>
@@ -739,7 +739,7 @@ Either no usable client IP was present, or the lookup did not complete. In both 
 
 <details>
 <summary><strong>Is the cache shared between requests and regions?</strong></summary>
-The cache lives in memory inside one edge isolate, so it is shared by the requests that isolate serves and is not shared across regions or across a new deployment. That is the correct trade off for middleware, where an external cache would add the latency the cache is meant to remove. Raise `IPGEO_CACHE_TTL_MS` if you want fewer lookups per isolate.
+The cache lives in memory inside one edge isolate, so it is shared by the requests that isolate serves and is not shared across regions or across a new deployment. That is the correct trade-off for middleware, where an external cache would add the latency the cache is meant to remove. Raise `IPGEO_CACHE_TTL_MS` if you want fewer lookups per isolate.
 </details>
 
 <details>
@@ -759,7 +759,7 @@ Yes. Vercel keeps environment variables separate for Production, Preview and Dev
 
 <details>
 <summary><strong>Does it support IPv6?</strong></summary>
-Yes. IPv6 addresses are validated and normalised, including bracketed forms with a port, zone indexes and IPv4 mapped addresses, and the API resolves IPv6 the same way it resolves IPv4.
+Yes. IPv6 addresses are validated and normalised, including bracketed forms with a port, zone indexes and IPv4-mapped addresses, and the API resolves IPv6 the same way it resolves IPv4.
 </details>
 
 <details>
@@ -769,7 +769,7 @@ Yes. Use `evaluateIpGeolocation` or `withIpGeolocation`, both shown in the compo
 
 <details>
 <summary><strong>How do I get an API key?</strong></summary>
-Sign up at <a href="https://app.ipgeolocation.io/signup">app.ipgeolocation.io/signup</a> and copy the key from your dashboard. The free plan needs no card. Keep the key in an environment variable and never in client side code, because the API authenticates with the key as a query parameter.
+Sign up at <a href="https://app.ipgeolocation.io/signup">app.ipgeolocation.io/signup</a> and copy the key from your dashboard. The free plan needs no card. Keep the key in an environment variable and never in client-side code, because the API authenticates with the key as a query parameter.
 </details>
 
 ## License
