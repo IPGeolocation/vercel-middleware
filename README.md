@@ -202,13 +202,13 @@ On Next.js 13 and 14, `headers()` is synchronous, so drop the `await`.
 
 ### Step 6. Check that it works
 
-Run `next dev` and open the site. Locally, there is no edge network in front of you, so the request arrives from `127.0.0.1`, which the API cannot resolve. The middleware recognises a private address and passes the request through without spending a credit, which means no headers are set. To see real data locally, send a public address yourself:
+Run `next dev` and open the site. Locally, there is no edge network in front of you, so the request arrives from `127.0.0.1`, which the API cannot resolve. The middleware recognizes a private address and passes the request through without spending a credit, which means no headers are set. To see real data locally, send a public address yourself:
 
 ```bash
 curl -H 'x-forwarded-for: 91.128.103.196' http://localhost:3000/
 ```
 
-Set `IPGEO_LOG_LEVEL=debug` while you are setting things up and the middleware reports each lookup, each cache hit and the credits charged. Move back to the default `warn` afterwards.
+Set `IPGEO_LOG_LEVEL=debug` while you are setting things up and the middleware reports each lookup, each cache hit and the credits charged. Move back to the default `warn` afterward.
 
 ## Reading geolocation data in your application
 
@@ -298,7 +298,7 @@ Headers that use the prefix are removed from the inbound request on every path, 
 
 ## Configuration
 
-Every setting is an environment variable, so you can change behaviour per environment in Vercel without a code change. A complete annotated file is in [`.env.example`](https://github.com/IPGeolocation/vercel-middleware/blob/main/.env.example).
+Every setting is an environment variable, so you can change behavior per environment in Vercel without a code change. A complete annotated file is in [`.env.example`](https://github.com/IPGeolocation/vercel-middleware/blob/main/.env.example).
 
 ### Required
 
@@ -339,7 +339,7 @@ Each of these needs the security module, which requires a paid plan and raises a
 | `IPGEO_THREAT_SCORE_BLOCK_THRESHOLD` | number | disabled | Block at or above this score, 0 to 100 |
 | `IPGEO_REQUIRE_SECURITY` | boolean | `false` | Block when a security rule is active but the API returned no security data |
 
-### Blocking behaviour
+### Blocking behavior
 
 | Variable | Type | Default | Description |
 |---|---|---|---|
@@ -376,7 +376,7 @@ Each of these needs the security module, which requires a paid plan and raises a
 | `IPGEO_TRUSTED_PROXY_COUNT` | number | `0` | Number of proxies you operate in front of the application |
 | `IPGEO_LOG_LEVEL` | enum | `warn` | `silent`, `error`, `warn`, `info` or `debug` |
 
-## Blocking behaviour in detail
+## Blocking behavior in detail
 
 ### Block modes
 
@@ -496,7 +496,7 @@ export const middleware = createIpGeoMiddleware({
 
 ## Client IP resolution
 
-The middleware reads the first of these headers that carries a usable address: `x-vercel-forwarded-for`, `x-forwarded-for`, `x-real-ip`, `cf-connecting-ip`, `true-client-ip`. Values are validated before use, and ports, bracketed IPv6, IPv4 mapped IPv6 such as `::ffff:203.0.113.10` and zone indexes are all normalised.
+The middleware reads the first of these headers that carries a usable address: `x-vercel-forwarded-for`, `x-forwarded-for`, `x-real-ip`, `cf-connecting-ip`, `true-client-ip`. Values are validated before use, and ports, bracketed IPv6, IPv4 mapped IPv6 such as `::ffff:203.0.113.10` and zone indexes are all normalized.
 
 Private, loopback, link-local, carrier-grade NAT and documentation ranges are rejected, because the API answers HTTP 423 for them. Rejecting them locally saves a round trip and a log line.
 
@@ -571,12 +571,12 @@ export async function POST(request: Request) {
 
 ## Upgrading from 1.x
 
-Version 2.0.0 fixes behaviour that was wrong rather than merely different, so a few defaults changed. The full list is in [CHANGELOG.md](https://github.com/ipgeolocation/vercel-middleware/blob/main/CHANGELOG.md). The points most likely to affect you:
+Version 2.0.0 fixes behavior that was wrong rather than merely different, so a few defaults changed. The full list is in [CHANGELOG.md](https://github.com/ipgeolocation/vercel-middleware/blob/main/CHANGELOG.md). The points most likely to affect you:
 
 - The security module is requested only when a security rule is on. If you relied on `x-ipgeo-is-vpn` being present while every rule was off, switch on the rule you care about or pass `include: ['security']` when calling the library directly.
 - `lookupIpGeolocation` no longer sets `includeSecurity: true` by default.
-- Country redirects keep the path and query string. Set `IPGEO_REDIRECT_PRESERVE_PATH=false` for the old behaviour.
-- An allow list now blocks an unknown country. Set `IPGEO_ALLOW_UNKNOWN_COUNTRY=true` for the old behaviour.
+- Country redirects keep the path and query string. Set `IPGEO_REDIRECT_PRESERVE_PATH=false` for the old behavior.
+- An allow list now blocks an unknown country. Set `IPGEO_ALLOW_UNKNOWN_COUNTRY=true` for the old behavior.
 - Country blocks now add `?reason=country`, so a block page that switches on the reason needs a case for it.
 - `getClientIp` returns `null` for private addresses, including `127.0.0.1` in local development.
 - `IPGEO_BLOCK_TOR` defaults to `false`. The 1.0.0 documentation said the default was `true`, but the code never did that. If you want Tor blocked, set the variable explicitly.
@@ -624,9 +624,9 @@ export const config = { matcher: ['/((?!_next/static|_next/image).*)'] };
 
 ### Everything is blocked after I switched on fail closed
 
-**Cause:** in fail closed mode any failed lookup becomes a block. An invalid key, an exhausted quota or a network problem takes the whole site down.
+**Cause:** In fail-closed mode, any failed lookup becomes a block. An invalid key, an exhausted quota or a network problem takes the whole site down.
 
-**Fix:** check the logs for the failure reason. `unauthorized` points at the key or the subscription, `rate_limited` at the daily quota, `timeout` at network conditions. Verify the key directly:
+**Fix:** Check the logs for the failure reason. `unauthorized` points at the key or the subscription, `rate_limited` at the daily quota, `timeout` at network conditions. Verify the key directly:
 
 ```bash
 curl "https://api.ipgeolocation.io/v3/ipgeo?apiKey=YOUR_KEY&ip=8.8.8.8"
@@ -638,7 +638,7 @@ While you investigate, set `IPGEO_FAIL_CLOSED=false` or `IPGEO_ENABLED=false`.
 
 **Cause:** in 1.x a target with a trailing slash, such as `{"GB":"/uk/"}`, redirected forever. It can also happen when the target path does not exist and your application rewrites it back.
 
-**Fix:** upgrade to 2.0.0, which normalises the target and leaves a visitor alone once they are at or below it. Then confirm the target path really exists, and that no `next.config.js` rewrite sends it back to the root.
+**Fix:** upgrade to 2.0.0, which normalizes the target and leaves a visitor alone once they are at or below it. Then confirm the target path really exists, and that no `next.config.js` rewrite sends it back to the root.
 
 ### Locally I get no data, or the logs mention a private address
 
@@ -759,7 +759,7 @@ Yes. Vercel keeps environment variables separate for Production, Preview and Dev
 
 <details>
 <summary><strong>Does it support IPv6?</strong></summary>
-Yes. IPv6 addresses are validated and normalised, including bracketed forms with a port, zone indexes and IPv4-mapped addresses, and the API resolves IPv6 the same way it resolves IPv4.
+Yes. IPv6 addresses are validated and normalized, including bracketed forms with a port, zone indexes and IPv4-mapped addresses, and the API resolves IPv6 the same way it resolves IPv4.
 </details>
 
 <details>
