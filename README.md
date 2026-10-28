@@ -418,7 +418,7 @@ A visitor from Great Britain who opens `/pricing?ref=ad` is sent to `/uk/pricing
 
 Rules that keep the feature predictable:
 
-- Only same origin paths are accepted. A value such as `https://example.com/uk` is ignored and logged, so a mistyped variable cannot turn the middleware into an open redirect.
+- Only same-origin paths are accepted. A value such as `https://example.com/uk` is ignored and logged, so a mistyped variable cannot turn the middleware into an open redirect.
 - A trailing slash is removed, so `{"GB":"/uk/"}` behaves the same as `{"GB":"/uk"}` rather than redirecting forever.
 - A visitor already at or below the target path is left alone.
 - With `IPGEO_REDIRECT_RESPECT_EXISTING` on, a visitor sitting on any other mapped path is also left alone, so a German visitor who deliberately opened `/uk` stays there.
@@ -475,7 +475,10 @@ import { NextResponse } from 'next/server';
 import { withIpGeolocation } from 'ipgeolocation-vercel-middleware/middleware';
 
 export const middleware = withIpGeolocation(async (request, geo) => {
-  if (geo.country === 'US' && !request.cookies.get('age_verified')) {
+  // Skip /verify itself (and any endpoint its form submits to), or unverified visitors loop.
+  if (request.nextUrl.pathname !== '/verify' &&
+      geo.country === 'US' &&
+      !request.cookies.get('age_verified')) {
     return NextResponse.redirect(new URL('/verify', request.url));
   }
 
