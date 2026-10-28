@@ -176,7 +176,7 @@ IPGEO_COUNTRY_REDIRECTS={"US":"/us","GB":"/uk","DE":"/de"}
 ```
 
 ```bash
-# Block anonymised and high risk traffic. Needs a paid plan.
+# Block anonymized and high risk traffic. Needs a paid plan.
 IPGEOLOCATION_API_KEY=your_api_key_here
 IPGEO_BLOCK_VPN=true
 IPGEO_BLOCK_TOR=true
