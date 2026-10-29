@@ -67,11 +67,11 @@
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
-    "@vitest/coverage-v8": "^4.1.11",
-    "next": "^15.0.0",
+    "@vitest/coverage-v8": "^4.1.12",
+    "next": "^15.5.28",
     "tsup": "^8.0.0",
     "typescript": "^5.0.0",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.12"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -80,7 +80,8 @@
     "access": "public"
   },
   "overrides": {
-    "vite": "^6.4.3",
+    "vite": "^6.4.4",
+    "source-map-js": "^1.2.2",
     "postcss": "^8.5.28",
     "tsup": {
       "esbuild": "^0.28.2"
