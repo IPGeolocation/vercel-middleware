@@ -112,7 +112,9 @@ import { proxy } from 'ipgeolocation-vercel-middleware/middleware';
 export { proxy };
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)']
+  matcher: [
+    '/((?!_next/static|_next/image|_next/data|favicon.ico|robots.txt|sitemap.xml|.*\\.(?:css|js|mjs|map|json|txt|xml|ico|png|jpg|jpeg|gif|webp|avif|svg|woff|woff2|ttf|otf|eot|mp4|webm|mp3|pdf|zip)$).*)'
+  ]
 };
 ```
 
@@ -452,7 +454,9 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)']
+  matcher: [
+    '/((?!_next/static|_next/image|_next/data|favicon.ico|robots.txt|sitemap.xml|.*\\.(?:css|js|mjs|map|json|txt|xml|ico|png|jpg|jpeg|gif|webp|avif|svg|woff|woff2|ttf|otf|eot|mp4|webm|mp3|pdf|zip)$).*)'
+  ]
 };
 ```
 
@@ -496,6 +500,8 @@ export const middleware = createIpGeoMiddleware({
   blockMode: 'deny'
 });
 ```
+
+These two snippets show only the function. Add the same `config` export as in the Quick Start to the file, or the middleware runs on every request, static files included.
 
 ## Client IP resolution
 
@@ -610,7 +616,11 @@ import { middleware } from 'ipgeolocation-vercel-middleware/middleware';
 
 export { middleware };
 
-export const config = { matcher: ['/((?!_next/static|_next/image).*)'] };
+export const config = {
+  matcher: [
+    '/((?!_next/static|_next/image|_next/data|favicon.ico|robots.txt|sitemap.xml|.*\\.(?:css|js|mjs|map|json|txt|xml|ico|png|jpg|jpeg|gif|webp|avif|svg|woff|woff2|ttf|otf|eot|mp4|webm|mp3|pdf|zip)$).*)'
+  ]
+};
 ```
 
 ### TypeScript cannot find `ipgeolocation-vercel-middleware/middleware`
