@@ -51,7 +51,7 @@ Repeat visitors within the cache window add no network latency and cost no credi
 
 ### Which plan do you need
 
-The base lookup, which returns country, region, city, coordinates, time zone, currency and ASN, works on the free plan. The free plan includes 1,000 requests per day.
+The base lookup, which returns country, region, city, coordinates, time zone, currency and ASN, works on the free plan. The free plan includes 1,000 credits a day, reset at 00:00 UTC.
 
 The security module, which is what VPN, proxy, Tor, relay, bot, spam, attacker and threat score rules read, is available on paid plans only. A free plan key that asks for it receives HTTP 401. This middleware requests the module only when at least one security rule is switched on, so a free key that uses country rules and geolocation headers works without any extra configuration.
 
@@ -717,7 +717,7 @@ Issues and pull requests are welcome at [github.com/ipgeolocation/vercel-middlew
 
 <details>
 <summary><strong>Do I need a paid plan to use this middleware?</strong></summary>
-No. Geolocation headers, country allow and block lists, and country redirects all work on the free plan, which includes 1,000 requests per day. The security rules, which cover VPN, proxy, Tor, relay, bot, spam, attacker and threat score, need a paid plan. The middleware requests the security module only when one of those rules is switched on, so a free key is never asked for something it cannot have.
+No. Geolocation headers, country allow and block lists, and country redirects all work on the free plan, which includes 1,000 credits a day, reset at 00:00 UTC. The security rules, which cover VPN, proxy, Tor, relay, bot, spam, attacker and threat score, need a paid plan. The middleware requests the security module only when one of those rules is switched on, so a free key is never asked for something it cannot have.
 </details>
 
 <details>
