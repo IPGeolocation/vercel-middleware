@@ -1029,7 +1029,10 @@ async function executeLookup(
           ok: false,
           reason: 'unauthorized',
           status,
-          message: `The API rejected the request with HTTP ${status}. Check IPGEOLOCATION_API_KEY and your subscription status. ${outcome.message}`
+          message:
+            status === 403
+              ? `The API rejected the request with HTTP 403: this key has an IP allow-list and Vercel's outbound IP is not on it. Remove the allow-list or add your Vercel IPs to it. ${outcome.message}`
+              : `The API rejected the request with HTTP 401. Check IPGEOLOCATION_API_KEY and your subscription status. ${outcome.message}`
         };
       }
 
@@ -1048,7 +1051,7 @@ async function executeLookup(
           ok: false,
           reason: 'rate_limited',
           status,
-          message: `The plan quota is exhausted (HTTP 429). ${outcome.message}`
+          message: `No credits left (HTTP 429): the free plan's daily credits, or a paid plan's credits with overage off or at its cap. ${outcome.message}`
         };
       }
 

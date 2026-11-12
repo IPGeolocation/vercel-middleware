@@ -639,7 +639,7 @@ export const config = {
 
 **Cause:** In fail-closed mode, any failed lookup becomes a block. An invalid key, an exhausted quota or a network problem takes the whole site down.
 
-**Fix:** Check the logs for the failure reason. `unauthorized` points at the key or the subscription, `rate_limited` at the daily quota, `timeout` at network conditions. Verify the key directly:
+**Fix:** Check the logs for the failure reason. `unauthorized` points at the key or the subscription, `rate_limited` at your credits (the free plan's daily credits, or a paid plan with overage off or at its cap), `timeout` at network conditions. Verify the key directly:
 
 ```bash
 curl "https://api.ipgeolocation.io/v3/ipgeo?apiKey=YOUR_KEY&ip=8.8.8.8"
