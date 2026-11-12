@@ -3,6 +3,10 @@
 All notable changes to `ipgeolocation-vercel-middleware` are recorded here.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## Unreleased
+
+- Explain an HTTP 403 as an IP allow-list problem instead of a key or subscription problem, and describe a 429 as no credits left rather than an exhausted plan quota.
+
 ## 2.0.0
 
 A correctness and hardening release. Read the upgrade notes before deploying,

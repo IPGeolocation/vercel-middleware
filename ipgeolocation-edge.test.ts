@@ -821,9 +821,11 @@ describe('lookupIpGeolocationResult', () => {
     const fetchMock = vi.fn().mockResolvedValue(new Response('bad key', { status: 403 }));
     vi.stubGlobal('fetch', fetchMock);
 
-    await lookupIpGeolocationResult({ apiKey: 'key', ip: '8.8.8.8' });
+    const result = await lookupIpGeolocationResult({ apiKey: 'key', ip: '8.8.8.8' });
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.message).toContain('IP allow-list');
   });
 
   it('retries without the security module when a free plan key rejects it', async () => {
